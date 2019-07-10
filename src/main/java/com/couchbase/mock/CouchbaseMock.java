@@ -507,6 +507,7 @@ public class CouchbaseMock {
         o.printf("                      be later added via the REST API%n");
         o.printf("-c --cccp             Enable Carrier Publication bootstrap protocol by default%n");
         o.printf("-d --debug            Enable debug mode%n");
+        o.printf("--bucket-start-port   Set bucket start port");
         o.printf("%n");
         o.printf("=== -- bucket option ===%n");
         o.printf("Buckets descriptions is a comma-separated list of {name}:{password}:{bucket type} pairs.%n");
@@ -520,6 +521,7 @@ public class CouchbaseMock {
     public static void main(String[] args) {
         BucketConfiguration defaultConfig = new BucketConfiguration();
         int port = 8091;
+        int bucketStartPort = 0;
         int nodes = defaultConfig.numNodes;
         int vbuckets = defaultConfig.numVBuckets;
         int replicaCount = defaultConfig.numReplicas;
@@ -545,6 +547,7 @@ public class CouchbaseMock {
                 addOption(new CommandLineOption('c', "--cccp", false)).
                 addOption(new CommandLineOption('d', "--debug", false)).
                 addOption(new CommandLineOption('\0', "--version", false)).
+                addOption(new CommandLineOption('\0', "--bucket-start-port", true)).
                 addOption(new CommandLineOption('?', "--help", false));
 
         List<Entry> options = getopt.parse(args);
@@ -583,11 +586,13 @@ public class CouchbaseMock {
             } else if (e.key.equals("--version")) {
                 printVersion();
                 System.exit(0);
+            } else if (e.key.equals("--bucket-start-port") {
+                bucketStartPort =  Integer.parseInt(e.value);
             }
         }
 
         try {
-            CouchbaseMock mock = new CouchbaseMock(hostname, port, nodes, 0, vbuckets, bucketsSpec, replicaCount);
+            CouchbaseMock mock = new CouchbaseMock(hostname, port, nodes, bucketStartPort, vbuckets, bucketsSpec, replicaCount);
             if (emptyCluster) {
                 mock.clearInitialConfigs();
             }
