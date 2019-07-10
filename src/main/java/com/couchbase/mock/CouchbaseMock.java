@@ -586,8 +586,8 @@ public class CouchbaseMock {
             } else if (e.key.equals("--version")) {
                 printVersion();
                 System.exit(0);
-            } else if (e.key.equals("--bucket-start-port") {
-                bucketStartPort =  Integer.parseInt(e.value);
+            } else if (e.key.equals("--bucket-start-port")) {
+                bucketStartPort = Integer.parseInt(e.value);
             }
         }
 
