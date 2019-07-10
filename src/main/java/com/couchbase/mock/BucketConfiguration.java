@@ -67,6 +67,7 @@ public class BucketConfiguration {
         numReplicas = other.numReplicas;
         type = other.type;
         hostname = other.hostname;
+        bucketStartPort = other.bucketStartPort;
     }
 
     /** Gets the {@link #name }
